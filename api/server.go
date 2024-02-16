@@ -9,7 +9,7 @@ import (
 
 // Server serves HTTP requests for our banking service
 type Server struct {
-	store db.Store
+	store  db.Store
 	router *gin.Engine
 }
 
@@ -21,6 +21,9 @@ func NewServer(store db.Store) *Server {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("currency", validCurrency)
 	}
+
+	// USERS
+	router.POST("/users", server.createUser)
 
 	// ACCOUNTS
 	router.POST("/accounts", server.createAccount)
